@@ -11,14 +11,17 @@ class DataSource:
         Parameters
         ----------
         connection_string : str, optional
-            SQLAlchemy connection string for the database.
+            SQLAlchemy connection string for the database. If provided,
+            a connection engine is created automatically.
         type_ : str, optional
-            Type of the database. Supported values: "postgresql", "mysql".
+            Optional identifier for the database type. Supported values
+            include "postgresql" and "mysql". The parameter is
+            currently informational only.
         """
         self.type = type_
         self.connection_string = connection_string
         self._engine = None
-        if connection_string and type_:
+        if connection_string:
             self._engine = create_engine(connection_string)
 
     def query(self, sql: str) -> pd.DataFrame:
